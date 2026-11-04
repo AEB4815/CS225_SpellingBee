@@ -48,6 +48,32 @@ void checkGuess (string guess, string* validWords, int validLen, string* guessed
     //Call score guess and display game
 }
 
+void scoreGuess(string guess) {
+    //need an array of all the letters
+    char letters[7]; //idk how this gon work
+    int len = guess.length();
+    int points = len - 3;
+    bool pangram = true;
+    bool found = false;
+    for (int i; i < len; i++) {
+        found = false;
+        for(int j; j < 7; j++) {
+            if(guess[i] == letters[j]) {
+                found = true;
+            }
+        }
+        if(found == false) {
+            pangram = false;
+        }
+    }
+
+    if(pangram == true) {
+        points += 7; 
+    }
+    cout<<"+ "<<points<<" points!"<<endl;
+    //score += points; //tie ts to the class
+    //cout<<"Score: "<<score<<endl;
+}
 
 int main () {
 
