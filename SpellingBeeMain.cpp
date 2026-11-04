@@ -7,12 +7,28 @@
 #include <time.h>
 using namespace std;
 
-void checkGuess (string guess, string* validWords, int validLen, string* guessedWords, int guessedLen, char centerLetter) {
+class SpellingBee {
+private:
+    const char centerLetter;
+    const char letters[7];
+    int score;
+    string validWords[100];
+    string guessedWords[100];
+public:
+    SpellingBee(char cent, char c1, char c2, char c3, char c4, char c5, char c6, char c7) : centerLetter(cent), letters{c1, c2, c3, c4, c5, c6, c7} { score = 0; }
+    ~SpellingBee() { cout<<"Game over."<<endl; }
+    void checkGuess(string guess);
+    void scoreGuess(string guess);
+};
+
+void SpellingBee::checkGuess (string guess) {
     if((guess == "quit") || (guess == "q")) {
         //endGame();
         return;
     }
     int len = guess.length();
+    int validLen = sizeof(validWords) / sizeof(validWords[0]);
+    int guessedLen = sizeof(guessedWords) / sizeof(guessedWords[0]);
     if(len < 4) {
         cout<<"Guess must be at least 4 letters!"<<endl;
         return;
@@ -49,12 +65,12 @@ void checkGuess (string guess, string* validWords, int validLen, string* guessed
     } else {
         //append word to guessed list
     }
+    scoreGuess(guess);
     //Call score guess and display game
 }
 
-void scoreGuess(string guess) {
-    //need an array of all the letters
-    char letters[7]; //idk how this gon work
+void SpellingBee::scoreGuess(string guess) {
+    char letters[7];
     int len = guess.length();
     int points = len - 3;
     bool pangram = true;
@@ -75,8 +91,8 @@ void scoreGuess(string guess) {
         points += 7; 
     }
     cout<<"+ "<<points<<" points!"<<endl;
-    //score += points; //tie ts to the class
-    //cout<<"Score: "<<score<<endl;
+    score += points; 
+    cout<<"Score: "<<score<<endl;
 }
 
 int main() {
