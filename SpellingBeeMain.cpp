@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <time.h>
+
 using namespace std;
 
 class SpellingBee {
@@ -15,8 +16,8 @@ private:
     string validWords[100];
     string guessedWords[100];
 public:
-    SpellingBee(char cent, char c1, char c2, char c3, char c4, char c5, char c6, char c7) : centerLetter(cent), letters{c1, c2, c3, c4, c5, c6, c7} { score = 0; }
-    ~SpellingBee() { cout<<"Game over."<<endl; }
+    SpellingBee(char cent, char c1, char c2, char c3, char c4, char c5, char c6) : centerLetter(cent), letters{c1, c2, c3, c4, c5, c6, cent} { score = 0; cout<<"New game started"<<endl;} //new game constructor, takes in center letter and then other 6
+    ~SpellingBee() { cout<<"Game over"<<endl; }
     void checkGuess(string guess);
     void scoreGuess(string guess);
 };
@@ -63,7 +64,7 @@ void SpellingBee::checkGuess (string guess) {
         cout<<"Word already guessed!"<<endl;
         return;
     } else {
-        //append word to guessed list
+        //append word to guessed list - use vectors?
     }
     scoreGuess(guess);
     //Call score guess and display game
@@ -138,4 +139,7 @@ int main() {
     for (j=0; j<i; j++) {
         cout<<validWords[j]<<endl;
     }
+
+    //testing constructor
+    SpellingBee('c', 'n', 'l', 'o', 'v', 'e', 'a');
 }
