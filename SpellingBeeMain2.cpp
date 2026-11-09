@@ -1,5 +1,4 @@
 //Authors: Ari Chai, Axl Burtleson, Evalynn Hartunian
-//currently includes file i/o stuff, check if guess is valid, and score guess
 
 #include <iostream>
 #include <fstream>
