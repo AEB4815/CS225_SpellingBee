@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 #include <string>
 #include <time.h>
 #include <sstream>
@@ -14,7 +15,7 @@ using namespace std;
 class SpellingBee {
 private:
     const char centerLetter;
-    const char letters[7];
+    char letters[7];
     int score;
     int validWordCount;
     int guessedWordCount;
@@ -22,7 +23,9 @@ private:
     string guessedWords[100];
     bool gameOver;
 public:
-    SpellingBee(char cent, char c1, char c2, char c3, char c4, char c5, char c6) : centerLetter(cent), letters{c1, c2, c3, c4, c5, c6, cent} { score = 0; cout<<"New game started"<<endl;} //new game constructor, takes in center letter and then other 6
+    SpellingBee(char center, char letter1, char letter2,
+                char letter3, char letter4, char letter5,
+                char letter6);
     ~SpellingBee();
     void showRules() const;
     void displayGame();
@@ -50,7 +53,7 @@ SpellingBee::~SpellingBee() {
 void SpellingBee::showRules() const {
     cout << "\n=====================================\n";
     cout << "        WELCOME TO SPELLING BEE\n";
-    cout << "\n=====================================\n";
+    cout << "=====================================\n\n";
     cout << "How to play:\n";
     cout << "1. Create words using the seven displayed letters.\n";
     cout << "2. Every word must contain the center letter.\n";
@@ -121,10 +124,11 @@ void SpellingBee::checkGuess (string guess) {
     if (guess.length() < 4) {
         cout<<"Guess must be at least 4 letters!"<<endl;
     return;
+    }
 
     char lowercaseCenter = static_cast<char>(
-        tolower(static_case<unsigned char>(centerLetter))
-    };
+        tolower(static_cast<unsigned char>(centerLetter))
+    );
 
     bool containsCenter = false;
 
@@ -136,7 +140,7 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     if (!containsCenter) {
-        cout<<"Guess must contain center letter!"<<endl
+        cout<<"Guess must contain center letter!"<<endl;
         return;
     }
 
@@ -185,11 +189,11 @@ void SpellingBee::scoreGuess(string guess) {
         bool letterFound = false;
 
         char lowercaseLetter = static_cast<char>(
-            tolower(static_case<unsigned char>(letters[i]))
-        };
+            tolower(static_cast<unsigned char>(letters[i]))
+        );
     
         for(int j = 0; j < guess.length(); j++) {
-            if(guess[j] == lowercaseLetter {
+            if(guess[j] == lowercaseLetter) {
                 letterFound = true;
                 break;
             }
@@ -265,7 +269,7 @@ int main() {
                     break;
                 }
 
-                wordCount++
+                wordCount++;
             }
 
             if (wordCount >= 100) {
