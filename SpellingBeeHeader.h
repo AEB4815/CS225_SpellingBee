@@ -1,3 +1,5 @@
+//Authors: Ari Chai, Axl Burtleson, Evalynn Hartunian
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
