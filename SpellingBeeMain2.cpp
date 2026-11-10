@@ -139,7 +139,7 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     if (!containsCenter) {
-        cout<<"Guess must contain center letter!"<<endl;
+        cout << "Guess must contain center letter!" << endl;
         return;
     }
 
@@ -154,7 +154,7 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     if (!isValidWord) {
-        cout<<"Guess not in dictionary!"<<endl;
+        cout << "Guess not in dictionary!" << endl;
         return;
     }
 
@@ -162,7 +162,7 @@ void SpellingBee::checkGuess (string guess) {
 
     for (int i = 0; i < guessedWordCount; i++) {
         if (guess == guessedWords[i]) {
-            cout<<"Word already guessed!"<<endl;
+            cout << "Word already guessed!" << endl;
             return;
         }
     }
@@ -208,9 +208,9 @@ void SpellingBee::scoreGuess(string guess) {
         points += 7; 
         cout << "Pangram! You earned 7 points!\n";
     }
-    cout<<"+"<<points<<" points!"<<endl;
+    cout << "+" << points << " points!" << endl;
     *this += points; 
-    cout<<"Total score: "<<score<<"\n";
+    cout << "Total score: " << score << "\n";
 }
 
 // adds points to score
@@ -254,9 +254,9 @@ SpellingBee generateSpellingBee(int &wordCount) {
 
         //reads in the spelling bee letters and valid words 
         //basically reading all of them into "garbage" until it's the right one lol
-        for (k=0; k<randomBee; k++) {
-            i=0;
-            if (k==(randomBee-1)) {              //if correct pre-set spelling bee
+        for (k = 0; k < randomBee; k++) {
+            i = 0;
+            if (k == (randomBee-1)) {              //if correct pre-set spelling bee
                 if (!getline(bee, letters)) {
                     throw runtime_error("Could not read game letters");
                 }
