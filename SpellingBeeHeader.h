@@ -17,7 +17,7 @@ class Profile {
 
 class WordsAndLetters {
     public:
-        friend class SpellingBee;
+        //friend class SpellingBee;
         char centerLetter;
         char letters[7];
         string validWords[100];
@@ -42,5 +42,5 @@ public:
     void setValidWords(string words[], int count);
     SpellingBee& operator+=(int points);
     friend ostream& operator<<(ostream& output, const SpellingBee& game);
-    friend class WordsAndLetters;
+    //friend class WordsAndLetters;
 };
