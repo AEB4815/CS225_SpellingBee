@@ -12,7 +12,7 @@
 
 using namespace std;
 
-SpellingBee::SpellingBee(char center, char letter1, char letter2, char letter3, char letter4, char letter5, char letter6) : centerLetter(center), score(0), validWordCount(0), guessedWordCount(0), gameOver(false) {
+SpellingBee::SpellingBee(char center, char letter1, char letter2, char letter3, char letter4, char letter5, char letter6) : gameOver(false) {
     letters[0] = letter1;
     letters[1] = letter2;
     letters[2] = letter3;
@@ -20,6 +20,10 @@ SpellingBee::SpellingBee(char center, char letter1, char letter2, char letter3, 
     letters[4] = letter5;
     letters[5] = letter6;
     letters[6] = center;
+    centerLetter = center;
+    player.score = 0;
+    player.guessedWordCount = 0;
+    validWordCount = 0;
 }
 
 SpellingBee::~SpellingBee() {
@@ -57,7 +61,7 @@ ostream& operator<<(ostream& output, const SpellingBee& game) {
            << game.letters[4] << "]\n";
     output << "        [" << game.letters[5] << "]\n\n";
 
-    output << "Current score: " << game.score << "\n";
+    output << "Current score: " << game.player.score << "\n";
 
     return output;
 }
@@ -135,7 +139,7 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     // checks if word was already guessed
-    for (int i = 0; i < guessedWordCount; i++) {
+    for (int i = 0; i < player.guessedWordCount; i++) {
         if (guess == guessedWords[i]) {
             cout << "Word already guessed!" << endl;
             return;
@@ -143,12 +147,12 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     // stores guess
-    guessedWords[guessedWordCount] = guess;
-    guessedWordCount++;
+    guessedWords[player.guessedWordCount] = guess;
+    player.guessedWordCount++;
     scoreGuess(guess);
 
     // ends game if every word was found
-    if (guessedWordCount == validWordCount) {
+    if (player.guessedWordCount == validWordCount) {
         cout << "\nYou found every word!\n";
         gameOver = true;
         endGame();
@@ -185,12 +189,12 @@ void SpellingBee::scoreGuess(string guess) {
     }
     cout << "+" << points << " points!" << endl;
     *this += points; 
-    cout << "Total score: " << score << "\n";
+    cout << "Total score: " << player.score << "\n";
 }
 
 // adds points to score
 SpellingBee& SpellingBee::operator+=(int points) {
-    score += points;
+    player.score += points;
     return *this;
 }
 
@@ -199,8 +203,8 @@ void SpellingBee::endGame() const {
     cout << "\n=====================================\n";
     cout << "              GAME OVER\n";
     cout << "=====================================\n";
-    cout << "Final score: " << score << "\n";
-    cout << "Words found: " << guessedWordCount << "/" << validWordCount << "\n\n";
+    cout << player.username << "'s final score: " << player.score << "\n";
+    cout << "Words found: " << player.guessedWordCount << "/" << validWordCount << "\n\n";
     cout << "All valid words:\n";
 
     for (int i = 0; i < validWordCount; i++) {
@@ -228,7 +232,7 @@ SpellingBee generateSpellingBee(int &wordCount) {
         }
 
         //reads in the spelling bee letters and valid words 
-        //basically reading all of them into "garbage" until it's the right one lol
+        //basically reading all of them into "garbage" until it's the right one
         for (k = 0; k < randomBee; k++) {
             i = 0;
             if (k == (randomBee-1)) {              //if correct pre-set spelling bee
@@ -276,10 +280,13 @@ SpellingBee generateSpellingBee(int &wordCount) {
 }
 
 int main() {
-    //variable declarations
     int wordCount = 0;
-
     SpellingBee game = generateSpellingBee(wordCount);
+
+    cout << "\n\n\n\n\n\n\n\n\nGreetings, player!" << endl << "Enter your username: ";
+    cin >> game.player.username;
+    cout << "Good luck, " << game.player.username << "!!";
+
     game.showRules();
     game.displayGame();
 }
