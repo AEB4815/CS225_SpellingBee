@@ -247,9 +247,9 @@ SpellingBee generateSpellingBee(int &wordCount) {
 
     try {
         //opens file
-        ifstream bee("examplespellingbee.txt");
+        ifstream bee("GameList.txt");
         if (!bee) {
-            throw runtime_error("Could not open examplespellingbee.txt");
+            throw runtime_error("GameList.txt");
         }
 
         //reads in the spelling bee letters and valid words 
