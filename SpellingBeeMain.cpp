@@ -8,33 +8,9 @@
 #include <sstream>
 #include <stdexcept>
 #include <cctype>
+#include "SpellingBeeHeader.h"
 
 using namespace std;
-
-class SpellingBee {
-private:
-    const char centerLetter;
-    char letters[7];
-    int score;
-    int validWordCount;
-    int guessedWordCount;
-    string validWords[100];
-    string guessedWords[100];
-    bool gameOver;
-public:
-    SpellingBee(char center, char letter1, char letter2,
-                char letter3, char letter4, char letter5,
-                char letter6);
-    ~SpellingBee();
-    void showRules() const;
-    void displayGame();
-    void checkGuess(string guess);
-    void scoreGuess(string guess);
-    void endGame() const;
-    void setValidWords(string words[], int count);
-    SpellingBee& operator+=(int points);
-    friend ostream& operator<<(ostream& output, const SpellingBee& game);
-};
 
 SpellingBee::SpellingBee(char center, char letter1, char letter2, char letter3, char letter4, char letter5, char letter6) : centerLetter(center), score(0), validWordCount(0), guessedWordCount(0), gameOver(false) {
     letters[0] = letter1;
