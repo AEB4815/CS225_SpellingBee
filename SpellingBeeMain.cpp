@@ -135,7 +135,6 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     // checks if word was already guessed
-
     for (int i = 0; i < guessedWordCount; i++) {
         if (guess == guessedWords[i]) {
             cout << "Word already guessed!" << endl;
