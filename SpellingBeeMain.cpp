@@ -1,5 +1,4 @@
 //Authors: Ari Chai, Axl Burtleson, Evalynn Hartunian
-//currently includes file i/o stuff, check if guess is valid, and score guess
 
 #include <iostream>
 #include <fstream>
@@ -140,7 +139,7 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     if (!containsCenter) {
-        cout<<"Guess must contain center letter!"<<endl;
+        cout << "Guess must contain center letter!" << endl;
         return;
     }
 
@@ -155,7 +154,7 @@ void SpellingBee::checkGuess (string guess) {
     }
 
     if (!isValidWord) {
-        cout<<"Guess not in dictionary!"<<endl;
+        cout << "Guess not in dictionary!" << endl;
         return;
     }
 
@@ -163,7 +162,7 @@ void SpellingBee::checkGuess (string guess) {
 
     for (int i = 0; i < guessedWordCount; i++) {
         if (guess == guessedWords[i]) {
-            cout<<"Word already guessed!"<<endl;
+            cout << "Word already guessed!" << endl;
             return;
         }
     }
@@ -209,9 +208,9 @@ void SpellingBee::scoreGuess(string guess) {
         points += 7; 
         cout << "Pangram! You earned 7 points!\n";
     }
-    cout<<"+"<<points<<" points!"<<endl;
+    cout << "+" << points << " points!" << endl;
     *this += points; 
-    cout<<"Total score: "<<score<<"\n";
+    cout << "Total score: " << score << "\n";
 }
 
 // adds points to score
@@ -236,72 +235,77 @@ void SpellingBee::endGame() const {
     cout << "\nThank you for playing!\n";
 }
 
-int main() {
-    //variable declarations
+SpellingBee generateSpellingBee(int &wordCount) {
     int randomBee;
-    string letterLine;
     string validWords[100];
-    int wordCount = 0;
+    string letters, garbage;
+    int i=0, j=0, k=0;
 
     //randomizes the spelling bee (1-5 at the moment)
     srand(time(0));
     randomBee = rand() % (5) + 1;
 
-    //opens file
-    ifstream bee("examplespellingbee.txt");
-
     try {
+        //opens file
+        ifstream bee("examplespellingbee.txt");
         if (!bee) {
-            throw runtime_error(
-                "Could not open examplespellingbee.txt");
+            throw runtime_error("Could not open examplespellingbee.txt");
         }
 
-        for (int gameNumber = 0; gameNumber < randomBee; gameNumber++) {
-            wordCount = 0;
-
-            if (!getline(bee, letterLine)) {
-                throw runtime_error(
-                    "Could not read game letters");
-            }
-
-            while (wordCount < 100 && getline(bee, validWords[wordCount])) {
-                if (validWords[wordCount] == "*") {
-                    break;
+        //reads in the spelling bee letters and valid words 
+        //basically reading all of them into "garbage" until it's the right one lol
+        for (k = 0; k < randomBee; k++) {
+            i = 0;
+            if (k == (randomBee-1)) {              //if correct pre-set spelling bee
+                if (!getline(bee, letters)) {
+                    throw runtime_error("Could not read game letters");
                 }
 
-                wordCount++;
+                while (getline(bee, validWords[i])) {
+                    if (validWords[i] == string("*")) {
+                        validWords[i] = string("");   //nuke "*" character
+                        break;                        //stops after asterisk
+                    }
+                    i++;
+                }
             }
 
-            if (wordCount >= 100) {
-                throw runtime_error(
-                    "a game contains more than 100 words");
+            else {                           //if not correct pre-set spelling bee
+                if (!getline(bee, letters)) {
+                    throw runtime_error("Could not read game letters");
+                }
+                while (getline(bee, garbage)) {
+                    if (garbage == string("*")) {
+                        break;
+                    }
+                    i++;
+                }
             }
         }
+        if (i >= 100) {
+            throw runtime_error("a game contains more than 100 words");
+        }
+
+        //closes file
         bee.close();
-
-        char center;
-        char letter1;
-        char letter2;
-        char letter3;
-        char letter4;
-        char letter5;
-        char letter6;
-
-        stringstream letterStream(letterLine);
-
-        if(!(letterStream >> center >> letter1 >> letter2 >> letter3 >> letter4 >> letter5 >> letter6)) {
-            throw runtime_error(
-                "each game must have exactly seven letters");
-        }
-
-        SpellingBee game(center, letter1, letter2, letter3, letter4, letter5, letter6);
-        game.setValidWords(validWords, wordCount);
-        game.showRules();
-        game.displayGame();
     }
     catch (const exception& error) {
         cout << "error: " << error.what() << endl;
     }
-    return 0;
+
+    wordCount = i;
+
+    SpellingBee game(letters[0], letters[2], letters[4], letters[6], letters[8], letters[10], letters[12]);
+    game.setValidWords(validWords, wordCount);
+    return(game);
+}
+
+int main() {
+    //variable declarations
+    int wordCount = 0;
+
+    SpellingBee game = generateSpellingBee(wordCount);
+    game.showRules();
+    game.displayGame();
 }
 
