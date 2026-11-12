@@ -47,6 +47,7 @@ void SpellingBee::showRules() const {
     getline(cin, pause);
 }
 
+// displays letters in a hive pattern, and overloads the insertion operator
 ostream& operator<<(ostream& output, const SpellingBee& game) {
     const string yellow = "\033[1;33m";
     const string reset = "\033[0m";
@@ -158,7 +159,7 @@ void SpellingBee::checkGuess (string guess) {
         endGame();
     }
 }
-
+// pangram system if user creates an acceptable word with all 7 letters
 void SpellingBee::scoreGuess(string guess) {
     int points = guess.length() - 3;
     bool isPangram = true;
